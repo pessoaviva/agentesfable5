@@ -23,9 +23,19 @@ description: >-
    SaaS · API · Dashboard · CMS · Biblioteca · CLI · Fullstack · Mobile ·
    Monorepo.
 4. **Liste as dependências** relevantes (existentes e a adicionar).
-5. **Identifique riscos** (o que pode quebrar, o que é irreversível).
-6. **Escreva o plano resumido** (2-5 linhas em médio; detalhado em
-   alto/ultra). Só então modifique arquivos.
+5. **Identifique riscos** (o que pode quebrar, o que é irreversível) e
+   classifique cada um: baixo · médio · alto · crítico.
+6. **Escreva o plano resumido** (2-5 linhas em médio; em alto/ultra,
+   estruturado por fases: análise → implementação → validação → entrega).
+   Só então modifique arquivos.
+
+## Detector de inconsistências
+
+Durante a detecção (passo 2), confira a coerência entre as fontes de
+verdade: manifesto × lockfile × tsconfig/configs × versões declaradas × CI.
+Exemplo: `package.json` diz React 19, `tsconfig` assume React 18. Achou
+divergência? **Não escolha um lado em silêncio**: reporte como risco
+(alto) no handoff e, se a tarefa depender da resposta, `bloqueado`.
 
 ## Análise de impacto (antes de editar arquivo EXISTENTE)
 
@@ -37,8 +47,10 @@ Liste, com evidência (Grep pelos importadores é barato):
 - Existe contrato combinado (tipos compartilhados, schema, formato de
   resposta — confira `api.md` da memória)?
 
-Mudança que quebra contrato ou API pública sobe automaticamente o custo de
-mudança (abaixo) para **alto**.
+São **automaticamente custo alto (no mínimo)**, por menores que pareçam:
+alterar API pública · renomear endpoint · trocar banco/ORM · migração
+destrutiva · remover comportamento em uso · quebrar contrato combinado.
+Nenhuma dessas acontece sem a autorização do fluxo abaixo.
 
 ## Custo de mudança (classifique antes de implementar)
 

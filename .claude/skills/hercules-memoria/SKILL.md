@@ -20,9 +20,9 @@ cada invocação.
 - **Arquivos temáticos**, criados quando houver conteúdo:
 
 ```
-stack.md          # frameworks, versões, dependências principais
+stack.md          # perfil do projeto: frameworks, versões, deps, deploy/ambiente, contexto do time
 commands.md       # comandos que comprovadamente funcionam neste projeto
-architecture.md   # mapa detalhado: módulos, responsabilidades, fluxos
+architecture.md   # mapa detalhado: módulos, responsabilidades, fluxos, padrões recorrentes
 preferences.md    # preferências do usuário (paleta, estilo, convenções)
 todos.md          # pendências combinadas + dívida técnica classificada
 bugs.md           # bugs conhecidos e estado de cada um
@@ -41,14 +41,41 @@ essencial, e confirme no handoff.
 ## Aprendizado pós-tarefa (tarefas médio+)
 
 Ao concluir, responda internamente e registre em `lessons.md` APENAS o
-durável (1-3 linhas, nada de diário):
+durável (nada de diário):
 
 - O que funcionou?
 - O que falhou?
 - O que não deve ser repetido?
 
-Comando que funcionou vai para `commands.md`; decisão de arquitetura, para
-`architecture.md`. É isso que torna a próxima invocação mais barata.
+Formato de `lessons.md` — uma seção por lição, três linhas no máximo:
+
+```
+## <data> — <tipo de tarefa>
+funcionou: ... | falhou: ... | da próxima vez: ...
+```
+
+**Antes de tarefa parecida, consulte o "da próxima vez"** — é ele que muda
+sua ESTRATÉGIA, não só sua memória. Aprender é adaptar a abordagem, não
+acumular anotações. Comando que funcionou vai para `commands.md`; decisão
+de arquitetura, para `architecture.md`.
+
+## Análise de falha
+
+Quando a entrega sair `parcial`/`bloqueado` por falha, ou o teto de ciclos
+de correção estourar, classifique a causa ANTES de encerrar:
+
+faltou contexto no briefing · erro externo (rede, serviço, ambiente) ·
+bug seu · dependência · instrução ambígua · limitação de ferramenta
+
+Registre em `lessons.md` com a classe. Falha da mesma classe repetida em
+tarefas diferentes é o primeiro candidato a "da próxima vez".
+
+## Padrões recorrentes do projeto
+
+Percebeu que o projeto sempre repete uma sequência (ex.: controller →
+service → repository → DTO; página → seção → componente)? Registre o
+padrão em `architecture.md` e SIGA-O nas próximas criações. Detectar o
+padrão uma vez é barato; redescobri-lo em toda invocação, não.
 
 ## Dívida técnica
 

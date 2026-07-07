@@ -20,10 +20,12 @@ lint · typecheck · build · test
 (`npm run ...`, ou os equivalentes da stack: ruff/mypy/pytest, go vet/go
 build/go test...)
 
-- **Se algum falhar: corrija antes de entregar — teto de 3 ciclos de
-  correção por verificação.** Na 3ª falha consecutiva da mesma verificação,
-  pare e entregue `status: parcial` ou `bloqueado` com o diagnóstico do que
-  tentou. Não queime o orçamento em loop.
+- **Se algum falhar: corrija antes de entregar — teto de 3 ciclos por
+  verificação, com mudança de estratégia obrigatória.** A 2ª falha do mesmo
+  tipo PROÍBE repetir a mesma abordagem: mude a estratégia (outra causa
+  provável, outro caminho). Persistiu na 3ª: pare, rode a análise de falha
+  (módulo `hercules-memoria`) e entregue `parcial`/`bloqueado` com o
+  diagnóstico do que tentou. Não queime o orçamento em loop.
 - Falha pré-existente e fora do escopo: não conserte o projeto inteiro —
   reporte como risco/pendência.
 
@@ -33,8 +35,8 @@ Releia SOMENTE o código novo/alterado e pergunte:
 
 - Eu escreveria isso hoje?
 - Existe versão menor?
-- Existe repetição?
-- Existe código morto?
+- Existe repetição? Existe código morto? Existe import inútil?
+- Existe função gigante? Existe arquivo gigante que pedia divisão?
 - Existe nome ruim?
 
 Corrija o que a releitura revelar. Só então rode o checklist e entregue.
@@ -56,6 +58,40 @@ Corrija o que a releitura revelar. Só então rode o checklist e entregue.
 
 Item não verificável (requer credencial, serviço externo): "não verificado"
 no handoff com o motivo — nunca invente sucesso.
+
+## Definition of Done (além do checklist técnico)
+
+**Concluído** significa TODOS estes, não só código escrito:
+
+- ✓ objetivo do briefing atendido (releia o objetivo antes de afirmar);
+- ✓ verificações passam;
+- ✓ documentação atualizada quando o modo de usar mudou;
+- ✓ sem regressões no que já funcionava;
+- ✓ o usuário consegue usar o resultado — o caminho está descrito em
+  "como validar".
+
+Não fechou os cinco: `status: parcial`, com o que falta explícito.
+
+## Saúde do projeto (só o observável)
+
+Quando rodar os gates completos, feche o handoff com o retrato real —
+apenas valores MEDIDOS, nunca percentuais inventados: build (passa/falha),
+testes (N passam / N falham), warnings de lint (N), TODOs no código (N,
+via grep), dívida registrada (N itens por classe). Não estime cobertura
+sem ferramenta que a meça.
+
+## Reflexão final (consciência do próprio desempenho)
+
+Antes do handoff, responda internamente:
+
+- A solução ficou melhor do que o estado anterior?
+- Eu precisava modificar tudo o que modifiquei?
+- Criei complexidade nova? Daria para resolver com menos código?
+- O que eu faria diferente na próxima execução?
+- Vale guardar algo disso?
+
+O que valer, registre via módulo `hercules-memoria` (`lessons.md`). O
+resto, descarte — reflexão não é diário.
 
 ## Documentação (quando apropriado ao porte)
 

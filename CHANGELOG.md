@@ -1,5 +1,67 @@
 # Changelog
 
+## 2.0.0 — 2026-07-07
+
+Motor de execução e melhoria contínua — o agente passa a avaliar as
+próprias decisões ao longo do tempo, não só seguir regras.
+
+Adicionado:
+
+- **Ciclo de execução** no núcleo: objetivo → planejamento → execução →
+  validação → auto-revisão → aprendizado → handoff; em alto/ultra o plano é
+  estruturado por fases; em médio+ as fases são espelhadas no TodoWrite
+  (estado visível — versão leve da state machine proposta).
+- **Validação do objetivo** antes de gastar contexto: claro? suficiente?
+  conflito? dependência externa? risco? — reprova → bloqueado imediato.
+- **Definition of Done**: concluído = objetivo atendido + verificações
+  passam + docs atualizadas + sem regressões + usuário consegue usar.
+- **Autocorreção com mudança de estratégia**: a 2ª falha do mesmo tipo
+  proíbe repetir a abordagem; a 3ª dispara análise de falha e entrega
+  parcial/bloqueada (antes: apenas parava).
+- **Análise de falha**: causa classificada (contexto, externo, bug próprio,
+  dependência, instrução, ferramenta) e registrada em lessons.md.
+- **Reflexão final (consciência do próprio desempenho)**: ficou melhor?
+  precisava tocar tudo isso? criei complexidade? menos código resolveria?
+  o que faria diferente? — o durável vai para lessons.md.
+- **Aprendizado que muda estratégia**: lessons.md estruturado
+  (funcionou | falhou | da próxima vez) e consultado antes de tarefa
+  parecida — adaptar abordagem, não acumular anotações.
+- **Padrões recorrentes**: sequências repetidas do projeto (ex.: controller
+  → service → repository → DTO) registradas em architecture.md e seguidas.
+- **Detector de inconsistências**: coerência manifesto × lockfile × configs
+  × CI verificada no planejamento; divergência → risco alto, nunca escolha
+  silenciosa de um lado.
+- **Restrições automáticas de custo alto**: alterar API pública, renomear
+  endpoint, trocar banco/ORM, migração destrutiva, remover comportamento em
+  uso — sempre exigem o fluxo de autorização.
+- **Prioridade de achados (P0)**: problema que impede a tarefa atual é
+  corrigido; o resto é registrado classificado, sem desviar do plano.
+- **Riscos classificados** (baixo/médio/alto/crítico) no plano e no handoff,
+  somados ao rótulo de confiança.
+- **Saúde do projeto observável**: retrato só de valores medidos (build,
+  testes N/N, warnings N, TODOs N, dívida N por classe).
+- **Otimização ampliada** na auto-revisão: imports inúteis, funções e
+  arquivos gigantes.
+- **Perfil do projeto**: stack.md passa a cobrir deploy/ambiente/contexto.
+- **Convenção de módulos de stack** (`hercules-stack-<nome>`): skills
+  opcionais por tecnologia, carregadas junto com o planejamento quando a
+  stack detectada tiver uma.
+
+Rejeitado por decisão de design (registrado para não voltar):
+
+- Knowledge graph de tecnologias — o modelo já conhece as relações
+  (Next→React→TS); manter grafo em arquivo é burocracia que viola "menos
+  arquivos".
+- Percentuais de saúde/cobertura e benchmark com tempo gasto e taxa de
+  sucesso — o agente não mede tempo nem cobertura sem ferramenta; números
+  inventados violam o sistema de confiança (v1.2.0).
+- Scores numéricos de especialização dinâmica — mesma razão; a fronteira de
+  especialidade declarada + delegação já resolve.
+- State machine formal de 9 estados — subagente não é processo
+  longa-duração; fases no TodoWrite entregam o valor sem o aparato.
+- Pacotes de stack pré-fabricados — a convenção foi criada, mas conteúdo
+  genérico que o modelo já sabe não será embarcado.
+
 ## 1.4.0 — 2026-07-07
 
 Trabalho em equipe: orquestrador, agentes simultâneos e sub-subagentes.

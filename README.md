@@ -34,7 +34,35 @@ ignorar partes das próprias regras), o Hércules é **modular**:
 | [`hercules-delegacao`](skills/hercules-delegacao/SKILL.md) | critérios de custo/benefício, escopo, registro de sub-subagentes | ao considerar delegar |
 
 Tarefas modo baixo normalmente rodam só com o núcleo — contexto mínimo,
-máxima aderência às regras.
+máxima aderência às regras. Projetos podem adicionar **módulos de stack
+opcionais** (`hercules-stack-<nome>`, ex.: `hercules-stack-next`) em
+`.claude/skills/`, carregados junto com o planejamento quando a stack
+detectada tiver um.
+
+## Motor de execução e melhoria contínua (v2.0)
+
+Toda tarefa percorre o mesmo ciclo: **objetivo (validado) → planejamento →
+execução → validação → auto-revisão → aprendizado → handoff** — em médio+,
+as fases aparecem ao vivo na lista de tarefas. Sobre esse ciclo, a camada
+de melhoria contínua:
+
+- **Validação do objetivo** — claro? informação suficiente? conflito?
+  dependência externa? risco? Reprovou → `bloqueado` sem gastar contexto.
+- **Definition of Done** — concluído = objetivo atendido + verificações
+  passam + docs atualizadas + sem regressões + usuário consegue usar; não
+  fechou os cinco → `parcial`.
+- **Autocorreção com mudança de estratégia** — 2ª falha do mesmo tipo
+  proíbe repetir a abordagem; 3ª dispara análise de falha classificada
+  (contexto? externo? bug próprio? dependência? ferramenta?).
+- **Reflexão final** — ficou melhor que antes? precisava tocar tudo isso?
+  criei complexidade? menos código resolveria? o que faria diferente? — o
+  durável vai para `lessons.md` (funcionou | falhou | **da próxima vez**),
+  consultado antes de tarefas parecidas: aprendizado que muda estratégia,
+  não que acumula anotações.
+- **Padrões recorrentes** — sequências repetidas do projeto são registradas
+  e seguidas; **detector de inconsistências** entre manifesto, lockfile e
+  configs; **saúde do projeto** só com valores medidos (build, testes,
+  warnings, TODOs, dívida) — nunca percentuais inventados.
 
 ## O que ele faz
 

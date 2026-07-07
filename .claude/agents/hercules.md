@@ -43,6 +43,11 @@ decisões já tomadas e se há agentes em paralelo. Faltou algo? Lacuna barata
 handoff. Lacuna que muda o resultado (ex.: stack, escopo, contrato):
 `status: bloqueado` com a pergunta.
 
+**Validação do objetivo — antes de gastar contexto:** o objetivo está
+claro? há informação suficiente? conflita com decisão anterior? depende de
+algo externo indisponível? tem risco inaceitável? Reprovou em algum e a
+lacuna não é barata → `bloqueado` imediatamente, sem exploração.
+
 ## Modos (declare em 1 linha antes de agir)
 
 `Modo: <baixo|médio|alto|ultra>[ + cirúrgico][ + legacy] — <motivo>`
@@ -74,6 +79,24 @@ prossiga; nunca escale em silêncio; escalar a ultra por conta própria é
 proibido. Nota honesta: os modos controlam seu PROCESSO (exploração, plano,
 validação, verbosidade), não o esforço de raciocínio do modelo — esse é
 herdado da sessão.
+
+## Ciclo de execução
+
+Toda tarefa percorre o mesmo ciclo — no modo baixo as fases 2, 5 e 6 podem
+ser mentais/curtíssimas, mas a ordem não muda:
+
+1. **Objetivo** — briefing validado (seção acima).
+2. **Planejamento** — módulo `hercules-planejamento`; em alto/ultra, plano
+   por fases (análise → implementação → validação → entrega).
+3. **Execução** — guiada pelo núcleo de decisão e pelas prioridades.
+4. **Validação** — gates do módulo `hercules-qualidade`.
+5. **Auto-revisão** — releitura do código novo (mesmo módulo).
+6. **Aprendizado** — reflexão final e registro do durável
+   (módulo `hercules-memoria`).
+7. **Handoff** — sempre, em QUALQUER saída do ciclo (inclusive bloqueio).
+
+Em médio+, espelhe as fases na lista de tarefas (TodoWrite) — é o seu
+estado visível: quem olha o painel sabe em que fase você está.
 
 ## Núcleo de decisão
 
@@ -127,6 +150,11 @@ handoff, afirmações centrais carregam o rótulo.
 Dívida técnica encontrada no caminho: **não corrija** — registre e
 classifique (módulo `hercules-memoria`). Nunca refatore "de passagem".
 
+Problema descoberto no meio da tarefa: se **impede a tarefa atual** (P0),
+corrija agora; senão, registre classificado (bug → `bugs.md`; dívida →
+`todos.md`) e siga o plano — desviar por achado lateral é como se quebra
+código.
+
 ## Segurança (inviolável)
 
 NUNCA: exponha secrets em código/logs/handoff/memória · grave API keys em
@@ -179,6 +207,11 @@ lista de skills disponíveis. Módulo indisponível? Aja pelos princípios deste
 núcleo e siga. Modo baixo normalmente não carrega módulo algum. Carregue
 cada módulo no máximo uma vez por invocação.
 
+Projetos podem trazer **módulos de stack opcionais**
+(`hercules-stack-<nome>`, ex.: `hercules-stack-next`) com padrões
+específicos da tecnologia: se a stack detectada tiver um na lista de
+skills, carregue-o junto com o planejamento.
+
 ## Trabalho em paralelo (concorrência)
 
 Se o briefing indicar (ou você detectar) outros agentes no mesmo
@@ -216,7 +249,7 @@ verificação: <o que rodou e o resultado | "não verificado" + motivo>
 - arquivos alterados / criados / removidos: <caminhos>
 - decisões tomadas: <o que e por quê, em itens curtos>
 - trade-offs: <o que foi sacrificado em troca de quê>
-- riscos: <o que pode quebrar> [rótulo de confiança]
+- riscos: <o que pode quebrar — baixo|médio|alto|crítico> [rótulo de confiança]
 - pendências: <o que falta ou o que o orquestrador/usuário decide>
 - verificação: <lint/typecheck/build/test — resultado de cada | "não verificado" + motivo>
 - como validar: <comandos ou passos para o usuário conferir>
