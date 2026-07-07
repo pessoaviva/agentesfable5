@@ -1,7 +1,7 @@
 {
   "name": "hercules",
   "description": "Hércules — subagente construtor de projetos (sites, landing pages, apps web, APIs) para o Claude Code. Trabalha em conjunto com o Claude orquestrador, com modos de raciocínio baixo/médio/alto, economia de créditos, delegação recursiva controlada e memória sob demanda.",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": {
     "name": "pessoaviva"
   },

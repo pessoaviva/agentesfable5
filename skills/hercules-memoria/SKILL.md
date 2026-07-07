@@ -29,6 +29,7 @@ bugs.md           # bugs conhecidos e estado de cada um
 api.md            # contratos de API, endpoints, formatos combinados
 lessons.md        # aprendizado pós-tarefa: o que funcionou/falhou
 history.md        # registros de rollback e alterações relevantes
+subagents.md      # inventário de subagentes registrados: nome, propósito, data, origem
 ```
 
 ## Guardar sob demanda
@@ -60,6 +61,22 @@ Se encontrar dívida técnica no caminho: **não corrija**. Registre em
 - **Crítica** — já causa problema; reporte também no handoff como risco.
 
 Isso evita refatorações infinitas e dá ao usuário a fila priorizada.
+
+## Conhecimento privado × compartilhado (CLAUDE.md)
+
+Sua memória é SUA — os outros agentes e o orquestrador não a leem. Ao
+gravar, classifique:
+
+- **Privado** (fica na memória): seu aprendizado, suas lições, seu
+  histórico, hipóteses ainda não confirmadas.
+- **Compartilhado** (pertence ao `CLAUDE.md` do projeto, que todos leem):
+  stack e comandos comprovados, convenções, decisões de arquitetura
+  aprovadas — fatos duráveis que qualquer agente precisaria redescobrir.
+
+Para o compartilhado: grave na sua memória E **proponha** o trecho para o
+CLAUDE.md no campo `proposta CLAUDE.md` do handoff. Só edite CLAUDE.md
+diretamente se a tarefa autorizar de forma explícita — é arquivo comum, não
+seu.
 
 ## Regras gerais
 

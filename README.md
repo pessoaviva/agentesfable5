@@ -102,7 +102,41 @@ máxima aderência às regras.
 - **Handoff estruturado + métricas honestas** — bloco
   `[HÉRCULES→ORQUESTRADOR]` curto (modo baixo) ou completo (médio+) com
   decisões, trade-offs, riscos rotulados por confiança, como validar, como
-  reverter — e métricas apenas do observável.
+  reverter — e métricas apenas do observável. Status `parcial`/`bloqueado`
+  incluem **checkpoint de retomada** (pronto/falta/preciso de/contexto
+  mínimo) para o orquestrador retomar via SendMessage ou reinvocar barato.
+
+## Trabalho em equipe (orquestrador e outros agentes)
+
+O Hércules foi desenhado para operar num sistema multi-agente:
+
+- **Briefing de entrada** — ao invocá-lo, o orquestrador deve informar:
+  objetivo, arquivos/área em escopo, restrições, decisões já tomadas e se
+  há outros agentes em paralelo. Lacuna barata → ele assume o padrão do
+  projeto e declara a suposição; lacuna que muda o resultado → retorna
+  `bloqueado` com a pergunta.
+- **Orquestrador como roteador** — mensagens para outros agentes vão no
+  campo `mensagem-para` do handoff; o Hércules nunca presume canal direto.
+  Artefatos grandes trafegam por `.hercules/handoffs/` (efêmero,
+  gitignored, com cabeçalho de/para/data/tipo).
+- **Segurança de concorrência** — com agentes paralelos no mesmo repo, ele
+  fotografa o estado dos arquivos em escopo no início e reconfere antes de
+  entregar; detectou mudança que não fez → para e reporta, nunca
+  sobrescreve. Recomendação ao orquestrador: agentes paralelos que editam
+  arquivos devem rodar com `isolation: worktree`.
+- **Progresso ao vivo** — em tarefas médio+, mantém a lista de tarefas
+  (TodoWrite) atualizada, visível no painel enquanto roda em background.
+- **Delegação que se encaixa** — antes de paralelizar sub-subagentes, fixa
+  os contratos compartilhados (design tokens, interfaces, rotas) como dados
+  imutáveis, dá escopos disjuntos, exige deles o handoff curto e assume a
+  integração final (validação sobre o todo montado).
+- **Conhecimento compartilhado** — memória do agente é privada; fatos
+  duráveis do projeto (stack, comandos, convenções) viram **proposta de
+  CLAUDE.md** no handoff, para todos os agentes se beneficiarem — ele nunca
+  edita CLAUDE.md sem autorização explícita.
+- **Agentes registrados com linhagem** — sub-subagentes promovidos a
+  reutilizáveis entram no inventário (`subagents.md` da memória) e nascem
+  com ponteiro para o conhecimento comum do projeto.
 
 ## Instalação
 
@@ -174,6 +208,9 @@ CHANGELOG.md · LICENSE
 
 ```
 .claude/agent-memory/hercules/   # memória persistente nativa (MEMORY.md + temáticos)
-.hercules/handoffs/              # mensagens efêmeras para outros agentes (gitignored)
+.hercules/handoffs/              # artefatos efêmeros para outros agentes (gitignored)
 DECISIONS.md                     # decisões de custo alto/irreversível (quando houver)
 ```
+
+E propostas de atualização do `CLAUDE.md` do projeto (só aplicadas pelo
+orquestrador/usuário — nunca por conta própria).

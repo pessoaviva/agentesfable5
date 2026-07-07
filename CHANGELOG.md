@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.4.0 — 2026-07-07
+
+Trabalho em equipe: orquestrador, agentes simultâneos e sub-subagentes.
+
+- **Briefing de entrada**: a description agora ensina o orquestrador a
+  invocar (objetivo, escopo, restrições, decisões, paralelismo); nova seção
+  no núcleo define o comportamento com briefing incompleto (lacuna barata →
+  assume e declara; lacuna estrutural → bloqueado).
+- **Checkpoint de retomada**: handoffs `parcial`/`bloqueado` incluem bloco
+  Retomada (pronto/falta/preciso de/contexto mínimo) para retomada via
+  SendMessage ou reinvocação barata.
+- **Segurança de concorrência**: nova seção "Trabalho em paralelo" no
+  núcleo — snapshot do estado dos arquivos em escopo no início, reconferência
+  antes de entregar, e parada obrigatória ao detectar mudança externa;
+  recomendação de isolation: worktree para agentes paralelos.
+- **Orquestrador como roteador**: comunicação entre agentes passa pelo
+  handoff (novo campo `mensagem-para`); `.hercules/handoffs/` rebaixado a
+  canal de artefatos grandes, com formato de mensagem e ciclo de vida
+  definidos.
+- **Delegação que se encaixa**: contratos compartilhados fixados ANTES de
+  paralelizar (tokens, interfaces, rotas, como dados imutáveis), escopos
+  disjuntos, handoff curto exigido dos sub-subagentes, integração final
+  (validação sobre o todo) como responsabilidade do Hércules, e alerta de
+  travamento por prompt de permissão em background.
+- **Conhecimento compartilhado**: distinção privado × compartilhado no
+  módulo de memória; fatos duráveis do projeto viram proposta de CLAUDE.md
+  (novo campo `proposta CLAUDE.md` no handoff); edição direta do CLAUDE.md
+  só com autorização explícita.
+- **Inventário de subagentes**: novo `subagents.md` na memória; agentes
+  registrados nascem com ponteiro para o conhecimento comum do projeto e
+  handoff curto no template.
+- **TodoWrite com propósito**: em tarefas médio+, a lista de tarefas é o
+  canal de progresso ao vivo (o agente roda em background).
+
 ## 1.3.0 — 2026-07-07
 
 Rearquitetura do agente: núcleo mínimo + módulos sob demanda.
