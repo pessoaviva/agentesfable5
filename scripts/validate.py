@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Valida a integridade do plugin Hércules.
 
-Verifica: JSONs do plugin, frontmatter do agente, sincronia entre a fonte
-(agents/hercules.md) e a cópia de uso direto (.claude/agents/hercules.md),
-e consistência da versão com o CHANGELOG.
+Verifica: JSONs do plugin, frontmatter do agente e dos módulos (skills),
+sincronia entre as fontes (agents/, skills/) e as cópias de uso direto
+(.claude/agents/, .claude/skills/), e consistência da versão com o
+CHANGELOG.
 """
 import filecmp
 import json
@@ -12,9 +13,15 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "agents" / "hercules.md"
-COPY = ROOT / ".claude" / "agents" / "hercules.md"
-REQUIRED_FRONTMATTER = ("name:", "description:", "tools:", "model:")
+AGENT_SOURCE = ROOT / "agents" / "hercules.md"
+AGENT_COPY = ROOT / ".claude" / "agents" / "hercules.md"
+SKILLS = [
+    "hercules-planejamento",
+    "hercules-qualidade",
+    "hercules-memoria",
+    "hercules-delegacao",
+]
+REQUIRED_AGENT_FIELDS = ("name:", "description:", "tools:", "model:")
 
 errors = []
 
@@ -22,6 +29,21 @@ errors = []
 def check(condition, message):
     if not condition:
         errors.append(message)
+
+
+def frontmatter_of(path):
+    match = re.match(r"^---\n(.*?)\n---\n", path.read_text(), re.DOTALL)
+    check(match, f"{path.relative_to(ROOT)} sem frontmatter YAML")
+    return match.group(1) if match else ""
+
+
+def check_synced(source, copy):
+    check(copy.exists(), f"{copy.relative_to(ROOT)} não existe")
+    if copy.exists():
+        check(filecmp.cmp(source, copy, shallow=False),
+              f"{copy.relative_to(ROOT)} divergiu de "
+              f"{source.relative_to(ROOT)} — rode: "
+              f"cp {source.relative_to(ROOT)} {copy.relative_to(ROOT)}")
 
 
 plugin = json.loads((ROOT / ".claude-plugin" / "plugin.json").read_text())
@@ -34,21 +56,28 @@ names = [p.get("name") for p in marketplace.get("plugins", [])]
 check(plugin.get("name") in names,
       f"plugin '{plugin.get('name')}' não listado no marketplace.json")
 
-text = SOURCE.read_text()
-match = re.match(r"^---\n(.*?)\n---\n", text, re.DOTALL)
-check(match, "agents/hercules.md sem frontmatter YAML")
-if match:
-    frontmatter = match.group(1)
-    for field in REQUIRED_FRONTMATTER:
-        check(field in frontmatter, f"frontmatter sem campo obrigatório '{field}'")
-    check("model: fable" in frontmatter,
-          "model deve ser 'fable' (inteligência fixada no Fable 5)")
+agent_fm = frontmatter_of(AGENT_SOURCE)
+for field in REQUIRED_AGENT_FIELDS:
+    check(field in agent_fm, f"frontmatter do agente sem campo '{field}'")
+check("model: fable" in agent_fm,
+      "model deve ser 'fable' (inteligência fixada no Fable 5)")
+check("Skill" in agent_fm,
+      "agente sem a ferramenta Skill (necessária para carregar os módulos)")
+check_synced(AGENT_SOURCE, AGENT_COPY)
 
-check(COPY.exists(), ".claude/agents/hercules.md não existe")
-if COPY.exists():
-    check(filecmp.cmp(SOURCE, COPY, shallow=False),
-          ".claude/agents/hercules.md divergiu de agents/hercules.md — "
-          "rode: cp agents/hercules.md .claude/agents/hercules.md")
+for skill in SKILLS:
+    source = ROOT / "skills" / skill / "SKILL.md"
+    check(source.exists(), f"módulo skills/{skill}/SKILL.md ausente")
+    if not source.exists():
+        continue
+    skill_fm = frontmatter_of(source)
+    check(f"name: {skill}" in skill_fm,
+          f"módulo {skill}: frontmatter sem 'name: {skill}'")
+    check("description:" in skill_fm,
+          f"módulo {skill}: frontmatter sem 'description'")
+    check_synced(source, ROOT / ".claude" / "skills" / skill / "SKILL.md")
+    check(f"`{skill}`" in AGENT_SOURCE.read_text(),
+          f"núcleo do agente não referencia o módulo {skill}")
 
 changelog = (ROOT / "CHANGELOG.md").read_text()
 check(f"## {plugin.get('version')}" in changelog,

@@ -1,5 +1,48 @@
 # Changelog
 
+## 1.3.0 — 2026-07-07
+
+Rearquitetura do agente: núcleo mínimo + módulos sob demanda.
+
+- **Modularização**: o prompt monolítico (356 linhas) virou um núcleo de
+  ~210 linhas (missão, modos, decisão, confiança, prioridades, segurança,
+  economia, memória, handoff) + 4 módulos carregados sob demanda via skill:
+  `hercules-planejamento`, `hercules-qualidade`, `hercules-memoria`,
+  `hercules-delegacao`. Modo baixo roda só com o núcleo. Ferramenta `Skill`
+  adicionada ao agente; fallback definido quando um módulo não está
+  disponível.
+- **Missão**: o agente agora é definido pelo objetivo (projetos manteníveis
+  por outro desenvolvedor meses depois), não só pelo que faz.
+- **Sistema de confiança (anti-alucinação)**: afirmações rotuladas como
+  comprovado/validado/inferido/hipótese/suposição; hipótese nunca é
+  apresentada como fato; riscos do handoff carregam o rótulo.
+- **Núcleo de decisão**: perguntas obrigatórias antes de criar qualquer
+  estrutura, incluindo o detector de overengineering ("precisa existir — ou
+  pode ser uma função?"), heurísticas de minimalismo (menos arquivos,
+  dependências, abstrações, estados, configuração, código), princípio de
+  estabilidade (previsível > brilhante; 2 soluções → a mais simples; 3 → a
+  mais conhecida) e limite de criatividade (nunca inventar arquitetura,
+  padrões ou convenções).
+- **Custo de mudança**: classificação baixo/médio/alto/irreversível;
+  alto/irreversível exige justificativa, registro em DECISIONS.md e
+  confirmação do orquestrador.
+- **Análise de impacto**: antes de editar arquivo existente — quem importa,
+  quem depende, o que quebra, API pública, contratos.
+- **Aprendizado interno**: pós-tarefa médio+, o agente registra em
+  lessons.md o que funcionou/falhou/não repetir.
+- **Dívida técnica**: nunca corrigida de passagem — registrada em todos.md
+  com classificação baixa/média/alta/crítica.
+- **Novos modificadores de modo**: **cirúrgico** (modifica somente o
+  necessário; sem reorganizar/reformatar/mover) e **legacy** (projetos
+  antigos; compatibilidade acima de tudo), combináveis com qualquer modo.
+- **Revisão do próprio código**: antes de entregar, releitura apenas do
+  código novo (versão menor? repetição? código morto? nome ruim?).
+- **Especialização declarada**: forte em scaffolding/web/frontend/backend/
+  APIs/landing pages; ML, infra, segurança ofensiva, compiladores, kernel,
+  renderização e blockchain são delegados ou devolvidos ao orquestrador.
+- Validador e CI atualizados: verificam os módulos (frontmatter, sincronia
+  das cópias em .claude/skills/ e referências no núcleo).
+
 ## 1.2.0 — 2026-07-07
 
 Correções da revisão externa do agente:
