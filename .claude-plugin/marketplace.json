@@ -1,0 +1,13 @@
+{
+  "name": "agentesfable5",
+  "owner": {
+    "name": "pessoaviva"
+  },
+  "plugins": [
+    {
+      "name": "hercules",
+      "source": "./",
+      "description": "Hércules — subagente construtor de projetos (sites, landing pages, apps web, APIs) com modos de raciocínio baixo/médio/alto e economia de créditos."
+    }
+  ]
+}
