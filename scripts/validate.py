@@ -79,6 +79,23 @@ for skill in SKILLS:
     check(f"`{skill}`" in AGENT_SOURCE.read_text(),
           f"núcleo do agente não referencia o módulo {skill}")
 
+SCENARIOS = [
+    "projeto-vazio", "projeto-next", "projeto-laravel", "projeto-fastapi",
+    "projeto-quebrado", "projeto-legado", "projeto-monorepo",
+]
+for scenario in SCENARIOS:
+    sdir = ROOT / "tests" / "scenarios" / scenario
+    check((sdir / "cenario.md").exists(), f"cenário {scenario}: cenario.md ausente")
+    check((sdir / "prompt.txt").exists(), f"cenário {scenario}: prompt.txt ausente")
+    check((sdir / "fixture").is_dir(), f"cenário {scenario}: fixture/ ausente")
+    if (sdir / "cenario.md").exists():
+        content = (sdir / "cenario.md").read_text()
+        for section in ("## Comportamento esperado", "## Não deve", "## Avaliação"):
+            check(section in content,
+                  f"cenário {scenario}: cenario.md sem seção '{section}'")
+check((ROOT / "tests" / "run.sh").exists(), "tests/run.sh ausente")
+check((ROOT / "MANUTENCAO.md").exists(), "MANUTENCAO.md ausente")
+
 changelog = (ROOT / "CHANGELOG.md").read_text()
 check(f"## {plugin.get('version')}" in changelog,
       f"versão {plugin.get('version')} do plugin.json ausente no CHANGELOG.md")

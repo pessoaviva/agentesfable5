@@ -1,0 +1,1 @@
+Adicione uma função slugify em src/utils.js e exporte-a.

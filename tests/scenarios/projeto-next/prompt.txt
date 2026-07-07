@@ -1,0 +1,1 @@
+Adicione uma página /contato com um formulário de nome, email e mensagem.

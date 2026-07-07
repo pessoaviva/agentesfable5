@@ -1,5 +1,35 @@
 # Changelog
 
+## 2.1.0 — 2026-07-07
+
+Fundação de engenharia: constituição, testes do agente e manutenção.
+
+- **Constituição**: 5 princípios no topo do núcleo, acima de qualquer
+  regra, com precedência definida (conflito entre princípios → menor
+  número vence): não quebrar código, não inventar fatos, não expor
+  segredos, não aumentar complexidade sem ganho, não executar
+  irreversível sem explicação e autorização. Todas as seções passam a ser
+  subordinadas a ela.
+- **Suíte de cenários** (`tests/scenarios/`): 7 cenários com fixtures
+  reais — vazio, Next, Laravel, FastAPI, quebrado, legado, monorepo —
+  cada um com prompt e checklist esperado/não-deve; runner `tests/run.sh`
+  executa o agente em sandbox temporário (git iniciado, agente+módulos
+  instalados) para avaliação humana ou LLM-juiz. CI valida a estrutura da
+  suíte.
+- **Protocolo anti prompt-drift** (`MANUTENCAO.md`): revisão obrigatória
+  antes de cada minor (regra ainda faz sentido? duplicada? conflita?
+  removível?), orçamento de tamanho (núcleo ≤ ~320 linhas; módulo ≤ ~120)
+  e checklist de release incluindo rodar 2 cenários (1 feliz +
+  1 adversarial).
+- **Orçamento de contexto por fase** (heurístico): análise ~1/5,
+  implementação ~metade, verificação ~1/5, handoff mínimo; sinal de
+  estouro → parar e replanejar, em vez de continuar gastando na mesma
+  fase. Percentuais rígidos de tokens foram rejeitados (o agente não mede
+  tokens; o sinal comportamental é o que ele consegue observar).
+- **Decision Log estruturado**: DECISIONS.md ganhou formato obrigatório —
+  Problema, Alternativas, Escolhida, Motivo, Consequência esperada, data —
+  para decisões de custo alto/irreversível e arquitetura não óbvia.
+
 ## 2.0.0 — 2026-07-07
 
 Motor de execução e melhoria contínua — o agente passa a avaliar as

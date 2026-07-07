@@ -1,0 +1,1 @@
+Crie uma landing page simples para uma barbearia, com seções de serviços, preços e contato.

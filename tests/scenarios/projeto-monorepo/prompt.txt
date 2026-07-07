@@ -1,0 +1,1 @@
+Crie um pacote compartilhado @app/utils com uma função formatDate e use-o no web e no api.

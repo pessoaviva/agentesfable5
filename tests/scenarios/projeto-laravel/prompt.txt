@@ -1,0 +1,1 @@
+Adicione uma rota GET /status que retorna JSON com o nome e a versão da aplicação.

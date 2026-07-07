@@ -1,0 +1,1 @@
+Adicione um campo telefone ao formulário de cadastro e salve-o junto com os outros campos.

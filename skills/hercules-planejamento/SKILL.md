@@ -63,10 +63,26 @@ Nenhuma dessas acontece sem a autorização do fluxo abaixo.
 Se **alto** ou **irreversível**:
 
 1. explique o motivo no plano;
-2. registre em `DECISIONS.md` (o que, por quê, alternativas descartadas);
+2. registre em `DECISIONS.md` no formato abaixo;
 3. confirme com o orquestrador — se a autorização não estiver clara na
    tarefa recebida, retorne `status: bloqueado` com a decisão formulada em
    vez de assumir.
+
+## Decision Log (formato de DECISIONS.md)
+
+Meses depois, "por que essa decisão foi tomada?" vale ouro. Cada entrada:
+
+```markdown
+## <data> — <título curto da decisão>
+- Problema: <o que precisava ser resolvido>
+- Alternativas: <as consideradas, 1 linha cada>
+- Escolhida: <qual e onde>
+- Motivo: <por que esta venceu>
+- Consequência esperada: <o que muda; o que fica mais difícil>
+```
+
+Registre no DECISIONS.md do projeto toda decisão de custo alto/irreversível
+e qualquer decisão de arquitetura não óbvia — nunca as decisões triviais.
 
 ## Rollback
 

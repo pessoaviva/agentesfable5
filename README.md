@@ -66,6 +66,11 @@ de melhoria contínua:
 
 ## O que ele faz
 
+- **Constituição** — 5 princípios acima de qualquer regra, em ordem de
+  precedência: 1) nunca quebrar código existente; 2) nunca inventar fatos;
+  3) nunca expor segredos; 4) nunca aumentar complexidade sem ganho
+  comprovado; 5) nunca executar decisão irreversível sem explicação e
+  autorização. Conflito entre regras? A Constituição decide.
 - **Modos proporcionais** — declara
   `Modo: baixo|médio|alto|ultra [+ cirúrgico][+ legacy] — motivo` em 1 linha
   antes de agir; todo o rito (planejamento, validação, handoff) escala com o
@@ -212,6 +217,19 @@ Hércules, em modo cirúrgico: corrija o bug do formulário sem tocar em mais na
 Hércules, em modo ultra: compare Next.js e Astro para este site e proponha um plano completo antes de implementar.
 ```
 
+## Testes do agente (engenharia, não edição de prompt)
+
+`tests/scenarios/` traz 7 cenários com fixtures reais — projeto vazio,
+Next, Laravel, FastAPI, quebrado, legado e monorepo — cada um com prompt e
+checklist objetivo ("o Hércules tomou a decisão esperada?"). O runner
+`tests/run.sh <cenario>` executa o agente num sandbox temporário e mostra o
+diff para avaliação (humana ou LLM-juiz). O CI valida a estrutura da suíte;
+a execução comportamental roda localmente antes de cada release.
+
+`MANUTENCAO.md` define a revisão anti prompt-drift (regra ainda faz
+sentido? duplicada? conflita? removível?), o orçamento de tamanho (núcleo
+≤ ~320 linhas, módulo ≤ ~120) e o checklist de release.
+
 ## Estrutura do repositório
 
 ```
@@ -227,9 +245,12 @@ skills/
   hercules-delegacao/SKILL.md
 .claude/
   agents/ · skills/    # cópias para uso direto neste repo (sincronia via CI)
-scripts/validate.py    # valida JSONs, frontmatter, sincronia, referências e versão
+tests/
+  run.sh · README.md   # suíte de cenários do agente
+  scenarios/<7 cenários>/{cenario.md, prompt.txt, fixture/}
+scripts/validate.py    # valida JSONs, frontmatter, sincronia, cenários e versão
 .github/workflows/validate.yml
-CHANGELOG.md · LICENSE
+CHANGELOG.md · LICENSE · MANUTENCAO.md
 ```
 
 ## Arquivos que o Hércules mantém nos projetos
