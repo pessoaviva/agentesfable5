@@ -18,9 +18,14 @@ distribui.
 - **Economia de créditos** — baixo/médio por padrão, leitura seletiva,
   chamadas agrupadas, resultado compacto. Proibido criar sub-subagente para
   tarefa de 1 chamada.
-- **Inteligência herdada** — `model: inherit`: roda com o mesmo modelo da
-  sessão principal. Se a sessão usa Claude Fable 5, o Hércules opera com a
-  inteligência do Fable 5.
+- **Inteligência fixada no Fable 5** — `model: fable`: o Hércules roda
+  sempre no Claude Fable 5, independentemente do modelo da sessão principal.
+  Exemplo: sessão em Opus 4.8 → o Hércules continua operando com a
+  inteligência do Fable 5. Para travar uma versão exata, troque para o ID
+  completo (`model: claude-fable-5`). Requisitos: a conta precisa ter acesso
+  ao Fable 5 — se o modelo estiver bloqueado pela allowlist da organização
+  (`availableModels`) ou pela variável `CLAUDE_CODE_SUBAGENT_MODEL`, o
+  Claude Code ignora o valor e cai no modelo herdado da sessão.
 - **Delegação recursiva controlada** — pode criar sub-subagentes apenas para
   unidades independentes/paralelizáveis ou especialidade que ele não tem. Ao
   final, decide explicitamente: **descartar** o sub-subagente ou
