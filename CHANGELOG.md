@@ -1,5 +1,41 @@
 # Changelog
 
+## 2.3.0 — 2026-07-08
+
+Hierarquia de par/comandante, memória em três camadas estilo Obsidian e
+delegação como padrão.
+
+- **Nunca subordinado**: núcleo define a hierarquia — em modo autônomo o
+  Hércules COMANDA (subagentes trabalham para ele; `"agent": "hercules"`
+  no settings o torna o agente padrão de toda sessão); em modo subagente é
+  PAR do orquestrador, com a mesma inteligência (mesmo modelo, via
+  inherit — nunca "mais burro" que a sessão) e direito a discordância
+  técnica fundamentada no handoff. Nunca sabota em silêncio.
+- **Memória em três camadas, grafo estilo Obsidian**:
+  1. permanente (`~/.hercules/MEMORIA-PERMANENTE.md`) — regras dadas pelo
+     usuário e observações sobre ele, atravessa todos os projetos, lida no
+     início de cada invocação;
+  2. de projeto (nativa `memory: project`, como antes);
+  3. de erros (`erros.md`) — erro→causa→correção→como evitar, com REGRA DE
+     ATIVAÇÃO: consultada automaticamente na primeira falha de qualquer
+     verificação, antes do próximo ciclo de correção; erros recorrentes do
+     próprio agente sobem para a memória permanente. Errar duas vezes no
+     mesmo ponto é proibido.
+  Notas conectadas com [[wikilinks]] (grafo navegável); temas que crescem
+  viram nota própria linkada.
+- **Delegação como padrão em tarefas grandes**: "delegue se houver ganho"
+  virou "procure o ganho e delegue; fazer tudo sozinho é a exceção com
+  justificativa". **Reutilização antes de criação**: subagents.md é
+  inventário E ativação — ao planejar, especialista registrado que cobre a
+  tarefa é invocado pelo nome. Mantido o único limite duro: proibido criar
+  subagente para tarefa de 1 chamada.
+- Anti-drift aplicado no próprio núcleo: removida duplicação do TodoWrite
+  (Ciclo × Economia) e compactadas as seções de módulos de stack e
+  trabalho em paralelo para respeitar o orçamento de ~320 linhas.
+- Interpretação registrada: "graphfy" foi implementado como grafo de
+  memória à la Obsidian ([[wikilinks]] entre notas). Se referir-se a uma
+  ferramenta externa específica, ajustar nesta seção.
+
 ## 2.2.0 — 2026-07-08
 
 Independência de modelo e modo autônomo — o Hércules sobrevive à

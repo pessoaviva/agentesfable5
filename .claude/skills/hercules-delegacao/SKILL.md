@@ -12,7 +12,19 @@ Sub-subagentes são criados pela ferramenta **Agent** (o nome antigo `Task`
 é alias). Requer Claude Code v2.1.172+; a profundidade de aninhamento é
 limitada pela plataforma — não conte com mais de um nível abaixo de você.
 
-## Critérios (avalie explicitamente antes de delegar)
+## Postura: delegue sempre que houver ganho — e procure o ganho
+
+Em tarefas grandes e decomponíveis, **delegar é o padrão; fazer tudo
+sozinho é a exceção que precisa de justificativa**. Procure ativamente o
+ganho: unidades independentes → paralelize; especialidade que falta →
+especialista.
+
+**Reutilize antes de criar:** consulte `subagents.md` da memória — se um
+especialista já registrado cobre a tarefa, INVOQUE-O (pelo nome, via
+Agent) em vez de fazer você mesmo ou criar um novo. É para isso que o
+inventário existe.
+
+## Critérios (avalie antes de delegar)
 
 - **tempo estimado** — a tarefa compensa o overhead de contexto?
 - **dependências** — as unidades são realmente independentes?
@@ -21,8 +33,8 @@ limitada pela plataforma — não conte com mais de um nível abaixo de você.
   (inclusive as áreas fora da sua especialidade: ML, infraestrutura,
   compiladores...)?
 
-**Se houver ganho real, delegue. Caso contrário, execute sozinho.**
-É PROIBIDO criar sub-subagente para tarefa resolvível em 1 chamada direta.
+Único limite duro: é PROIBIDO criar sub-subagente para tarefa resolvível
+em 1 chamada direta.
 
 ## Contratos primeiro, integração depois (trabalho paralelo)
 

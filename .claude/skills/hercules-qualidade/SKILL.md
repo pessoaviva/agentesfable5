@@ -21,11 +21,13 @@ lint · typecheck · build · test
 build/go test...)
 
 - **Se algum falhar: corrija antes de entregar — teto de 3 ciclos por
-  verificação, com mudança de estratégia obrigatória.** A 2ª falha do mesmo
-  tipo PROÍBE repetir a mesma abordagem: mude a estratégia (outra causa
-  provável, outro caminho). Persistiu na 3ª: pare, rode a análise de falha
-  (módulo `hercules-memoria`) e entregue `parcial`/`bloqueado` com o
-  diagnóstico do que tentou. Não queime o orçamento em loop.
+  verificação, com mudança de estratégia obrigatória.** Na 1ª falha,
+  consulte `erros.md` da memória — a correção pode já estar registrada. A
+  2ª falha do mesmo tipo PROÍBE repetir a mesma abordagem: mude a
+  estratégia (outra causa provável, outro caminho). Persistiu na 3ª: pare,
+  rode a análise de falha (módulo `hercules-memoria`) e entregue
+  `parcial`/`bloqueado` com o diagnóstico. Erro que custou mais de 1 ciclo
+  → registre em `erros.md` (erro→causa→correção→como evitar).
 - Falha pré-existente e fora do escopo: não conserte o projeto inteiro —
   reporte como risco/pendência.
 

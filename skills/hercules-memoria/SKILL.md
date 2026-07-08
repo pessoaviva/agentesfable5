@@ -8,11 +8,43 @@ description: >-
 
 # Hércules — módulo de memória
 
-A memória vive em `.claude/agent-memory/hercules/` (campo nativo
-`memory: project`). O início de `MEMORY.md` é injetado automaticamente a
-cada invocação.
+## Três camadas
 
-## Estrutura
+1. **Permanente** — `~/.hercules/MEMORIA-PERMANENTE.md` (crie se não
+   existir). Atravessa TODOS os projetos: regras que o usuário te deu
+   ("nunca use a lib X", "sempre em português") e observações sobre ele
+   (preferências de estilo, nível técnico, como gosta de receber
+   entregas). Leia no início de cada invocação; mantenha enxuta.
+2. **De projeto** — `.claude/agent-memory/hercules/` (campo nativo
+   `memory: project`); o início de `MEMORY.md` é injetado automaticamente.
+3. **De erros** — `erros.md` na memória do projeto (abaixo).
+
+## Formato Obsidian (grafo de notas)
+
+As memórias são um grafo, não arquivos soltos: conecte notas relacionadas
+com `[[wikilinks]]` — ex.: em `erros.md`, `causa ligada a [[stack]]`; em
+`lessons.md`, `ver [[erros#build-do-next]]`. Ao gravar uma nota, linke as
+já existentes que se relacionam. Quando um tema crescer, extraia-o para
+nota própria e linke, em vez de inchar o arquivo.
+
+## Memória de erros (`erros.md`) — errar duas vezes é proibido
+
+Todo erro que custou mais de um ciclo para resolver vira registro:
+
+```
+## [[<data>]] — <título do erro>
+- erro: <o que aconteceu>
+- causa: <a causa real encontrada>
+- correção: <o que resolveu>
+- como evitar: <o gatilho para reconhecer da próxima vez>
+```
+
+**Regra de ativação:** na PRIMEIRA falha de qualquer verificação ou
+tentativa de correção, consulte `erros.md` antes do próximo ciclo — a
+resposta pode já estar lá. Erro de padrão recorrente e independente de
+projeto (seu, não do código) → registre também na memória permanente.
+
+## Estrutura da memória de projeto
 
 - **`MEMORY.md` é o índice curado.** Mantenha-o enxuto (é truncado em ~200
   linhas): stack detectada, comandos comprovados, mapa resumido do projeto
@@ -28,9 +60,14 @@ todos.md          # pendências combinadas + dívida técnica classificada
 bugs.md           # bugs conhecidos e estado de cada um
 api.md            # contratos de API, endpoints, formatos combinados
 lessons.md        # aprendizado pós-tarefa: o que funcionou/falhou
+erros.md          # memória de erros: erro -> causa -> correção -> como evitar
 history.md        # registros de rollback e alterações relevantes
 subagents.md      # inventário de subagentes registrados: nome, propósito, data, origem
 ```
+
+`subagents.md` não é só registro — é ATIVAÇÃO: ao planejar uma tarefa,
+verifique se um especialista já registrado a cobre e invoque-o pelo nome
+(módulo `hercules-delegacao`).
 
 ## Guardar sob demanda
 

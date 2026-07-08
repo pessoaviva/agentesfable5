@@ -87,11 +87,14 @@ de melhoria contínua:
   nos arquivos deste plugin, não no modelo. Para fixá-lo num modelo
   específico enquanto esse modelo existir, troque para `model: fable` ou um
   ID completo — sabendo que fixar cria dependência da vida útil do modelo.
-- **Dois modos de existência** — como **subagente** (invocado pelo Claude
-  orquestrador, o padrão) ou **autônomo**: `claude --agent hercules`
-  transforma a sessão principal inteira no Hércules — system prompt, regras
-  e ferramentas dele —, com o usuário no papel de orquestrador. É assim que
-  ele cria projetos por conta própria, sem intermediário.
+- **Dois modos de existência — e nunca subordinado** — como **subagente**
+  (invocado pelo Claude orquestrador) ele é PAR: mesma inteligência (mesmo
+  modelo da sessão), especialidade própria e direito a discordância técnica
+  fundamentada no handoff. Como **autônomo** (`claude --agent hercules`) ele
+  COMANDA: a sessão principal inteira vira o Hércules, os subagentes que
+  ele cria trabalham para ele, e `"agent": "hercules"` no settings.json o
+  torna o agente padrão de toda sessão — acima, não abaixo, do Claude Code
+  genérico.
 - **Núcleo de decisão** — antes de criar qualquer estrutura: existe solução
   mais simples? padrão já usado? a abstração reduz ou aumenta complexidade?
   precisa ser uma classe/serviço/módulo — ou pode ser uma função?
@@ -112,13 +115,21 @@ de melhoria contínua:
   **revisa o próprio código novo** antes de entregar (versão menor?
   repetição? código morto? nome ruim?); checklist de conclusão; `maxTurns`
   limita o orçamento total.
-- **Memória nativa com aprendizado** — `memory: project`
-  (`.claude/agent-memory/hercules/`, `MEMORY.md` injetado automaticamente);
-  arquivos temáticos (stack, commands, architecture, preferences, todos,
-  bugs, api, **lessons**, history). Após tarefas médio+: o que funcionou, o
-  que falhou, o que não repetir → registrado. **Dívida técnica** encontrada
-  no caminho não é corrigida: é registrada e classificada
-  (baixa/média/alta/crítica) em `todos.md`.
+- **Memória em três camadas, em grafo estilo Obsidian** — notas conectadas
+  por `[[wikilinks]]`, navegáveis como no Obsidian:
+  1. **Permanente** (`~/.hercules/MEMORIA-PERMANENTE.md`): regras que você
+     deu ao agente e observações sobre você — vale em todos os projetos,
+     lida no início de cada invocação.
+  2. **De projeto** (`memory: project` nativa, `MEMORY.md` injetado
+     automaticamente): stack, comandos, arquitetura, preferências, todos,
+     bugs, api, lessons, history, subagents.
+  3. **De erros** (`erros.md`): todo erro custoso vira
+     erro→causa→correção→como evitar; **ativada automaticamente na
+     primeira falha de qualquer verificação** — errar duas vezes no mesmo
+     ponto é proibido. Erros recorrentes do próprio agente sobem para a
+     memória permanente.
+  Dívida técnica achada no caminho não é corrigida: registrada e
+  classificada em `todos.md`.
 - **Prioridades fixas** — não quebrar código > padrões do projeto >
   simplicidade > performance > features > refatorações. Nunca refatora "de
   passagem".
@@ -134,10 +145,13 @@ de melhoria contínua:
 - **Rollback via git** — em repo git limpo, o git é o rollback (handoff
   informa como reverter); fora de git, registra o conteúdo original antes de
   sobrescrever.
-- **Delegação recursiva com decisão explícita** — avalia tempo,
-  dependências, paralelismo e complexidade; ao final, **descarta ou
-  registra** o sub-subagente como agente reutilizável — nunca promoção
-  automática.
+- **Delegação como padrão em tarefas grandes** — sempre que houver ganho
+  (unidades independentes, especialidade que falta), ele cria subagentes —
+  e **reutiliza antes de criar**: o inventário `subagents.md` na memória
+  registra cada especialista criado, e ao planejar ele verifica se um
+  registrado cobre a tarefa e o reativa pelo nome. Ao final de cada
+  criação: **descarta ou registra** — nunca promoção automática. Único
+  limite: proibido criar subagente para tarefa de 1 chamada.
 - **Handoff estruturado + métricas honestas** — bloco
   `[HÉRCULES→ORQUESTRADOR]` curto (modo baixo) ou completo (médio+) com
   decisões, trade-offs, riscos rotulados por confiança, como validar, como
