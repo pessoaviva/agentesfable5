@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 — 2026-07-08
+
+Renumeração de versão a pedido do usuário: 2.4.0 → 0.5.0. Apenas o número
+muda — nenhuma alteração de conteúdo. O histórico abaixo permanece válido
+na ordem cronológica.
+
 ## 2.4.0 — 2026-07-08
 
 Integração com o Graphify (corrige a interpretação da v2.3.0).
