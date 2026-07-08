@@ -21,11 +21,10 @@ description: >-
 
 ## Formato Obsidian (grafo de notas)
 
-As memórias são um grafo, não arquivos soltos: conecte notas relacionadas
-com `[[wikilinks]]` — ex.: em `erros.md`, `causa ligada a [[stack]]`; em
-`lessons.md`, `ver [[erros#build-do-next]]`. Ao gravar uma nota, linke as
-já existentes que se relacionam. Quando um tema crescer, extraia-o para
-nota própria e linke, em vez de inchar o arquivo.
+A memória é um grafo, não arquivos soltos: ao gravar, conecte com
+`[[wikilinks]]` as notas que se relacionam (ex.: `ver [[erros#build]]`).
+Tema que cresceu → extraia para nota própria e linke, em vez de inchar o
+arquivo.
 
 ## Memória de erros (`erros.md`) — errar duas vezes é proibido
 
@@ -69,11 +68,9 @@ subagents.md      # inventário de subagentes registrados: nome, propósito, dat
 verifique se um especialista já registrado a cobre e invoque-o pelo nome
 (módulo `hercules-delegacao`).
 
-## Guardar sob demanda
-
-Quando pedirem para **guardar** algo: escreva no arquivo temático adequado
-(seção `## <data> — <tópico>`), atualize o índice em `MEMORY.md` se for
-essencial, e confirme no handoff.
+**Guardar sob demanda:** pediram para guardar algo → escreva no arquivo
+temático adequado (seção `## <data> — <tópico>`), atualize `MEMORY.md` se
+essencial, confirme no handoff.
 
 ## Aprendizado pós-tarefa (tarefas médio+)
 
@@ -92,27 +89,18 @@ funcionou: ... | falhou: ... | da próxima vez: ...
 ```
 
 **Antes de tarefa parecida, consulte o "da próxima vez"** — é ele que muda
-sua ESTRATÉGIA, não só sua memória. Aprender é adaptar a abordagem, não
-acumular anotações. Comando que funcionou vai para `commands.md`; decisão
-de arquitetura, para `architecture.md`.
+sua ESTRATÉGIA, não só sua memória. Comando que funcionou → `commands.md`;
+decisão de arquitetura e **padrões recorrentes do projeto** (ex.:
+controller → service → repository → DTO) → `architecture.md`, e SIGA-OS
+nas próximas criações.
 
 ## Análise de falha
 
-Quando a entrega sair `parcial`/`bloqueado` por falha, ou o teto de ciclos
-de correção estourar, classifique a causa ANTES de encerrar:
-
-faltou contexto no briefing · erro externo (rede, serviço, ambiente) ·
-bug seu · dependência · instrução ambígua · limitação de ferramenta
-
-Registre em `lessons.md` com a classe. Falha da mesma classe repetida em
+Entrega saiu `parcial`/`bloqueado` por falha, ou o teto de ciclos estourou?
+Classifique a causa antes de encerrar — faltou contexto · erro externo ·
+bug seu · dependência · instrução ambígua · limitação de ferramenta — e
+registre em `lessons.md` com a classe. Falha da mesma classe repetida em
 tarefas diferentes é o primeiro candidato a "da próxima vez".
-
-## Padrões recorrentes do projeto
-
-Percebeu que o projeto sempre repete uma sequência (ex.: controller →
-service → repository → DTO; página → seção → componente)? Registre o
-padrão em `architecture.md` e SIGA-O nas próximas criações. Detectar o
-padrão uma vez é barato; redescobri-lo em toda invocação, não.
 
 ## Dívida técnica
 
@@ -128,19 +116,12 @@ Isso evita refatorações infinitas e dá ao usuário a fila priorizada.
 
 ## Conhecimento privado × compartilhado (CLAUDE.md)
 
-Sua memória é SUA — os outros agentes e o orquestrador não a leem. Ao
-gravar, classifique:
-
-- **Privado** (fica na memória): seu aprendizado, suas lições, seu
-  histórico, hipóteses ainda não confirmadas.
-- **Compartilhado** (pertence ao `CLAUDE.md` do projeto, que todos leem):
-  stack e comandos comprovados, convenções, decisões de arquitetura
-  aprovadas — fatos duráveis que qualquer agente precisaria redescobrir.
-
-Para o compartilhado: grave na sua memória E **proponha** o trecho para o
-CLAUDE.md no campo `proposta CLAUDE.md` do handoff. Só edite CLAUDE.md
-diretamente se a tarefa autorizar de forma explícita — é arquivo comum, não
-seu.
+Sua memória é SUA — outros agentes não a leem. Aprendizado, lições e
+hipóteses ficam nela. Fato durável que TODOS os agentes precisariam
+redescobrir (stack, comandos comprovados, convenções, decisões aprovadas)
+→ grave na memória E proponha o trecho no campo `proposta CLAUDE.md` do
+handoff. Só edite CLAUDE.md diretamente com autorização explícita — é
+arquivo comum, não seu.
 
 ## Regras gerais
 
