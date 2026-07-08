@@ -80,12 +80,18 @@ de melhoria contínua:
   (projetos antigos — compatibilidade acima de tudo, sem refatorações nem
   upgrades grandes). *Nota honesta: modos controlam o processo, não o
   esforço de raciocínio do modelo (herdado da sessão).*
-- **Inteligência fixada no Fable 5** — `model: fable`: roda sempre no
-  Claude Fable 5, independentemente do modelo da sessão principal (sessão em
-  Opus 4.8 → Hércules continua no Fable 5). Para travar versão exata, use o
-  ID completo (`model: claude-fable-5`). Requer conta com acesso ao Fable 5;
-  allowlist da organização ou `CLAUDE_CODE_SUBAGENT_MODEL` podem forçar o
-  modelo herdado.
+- **Independência de modelo (sucessão garantida)** — `model: inherit`: o
+  Hércules herda o melhor modelo disponível na sessão — hoje Claude Fable 5,
+  amanhã o que o suceder. Quando um modelo for aposentado, o agente NÃO
+  quebra: a identidade dele (constituição, regras, módulos, memória) vive
+  nos arquivos deste plugin, não no modelo. Para fixá-lo num modelo
+  específico enquanto esse modelo existir, troque para `model: fable` ou um
+  ID completo — sabendo que fixar cria dependência da vida útil do modelo.
+- **Dois modos de existência** — como **subagente** (invocado pelo Claude
+  orquestrador, o padrão) ou **autônomo**: `claude --agent hercules`
+  transforma a sessão principal inteira no Hércules — system prompt, regras
+  e ferramentas dele —, com o usuário no papel de orquestrador. É assim que
+  ele cria projetos por conta própria, sem intermediário.
 - **Núcleo de decisão** — antes de criar qualquer estrutura: existe solução
   mais simples? padrão já usado? a abstração reduz ou aumenta complexidade?
   precisa ser uma classe/serviço/módulo — ou pode ser uma função?
@@ -196,6 +202,19 @@ cp -r skills/* <seu-projeto>/.claude/skills/
 verificada pelo CI.)
 
 ## Uso
+
+### Modo autônomo (o Hércules como agente principal)
+
+```
+claude --agent hercules
+```
+
+A sessão inteira passa a SER o Hércules: prompt, regras, módulos e
+ferramentas dele, criando projetos direto com você — sem orquestrador no
+meio. Funciona com qualquer modelo que a sessão usar, hoje e depois do
+Fable 5.
+
+### Como subagente (invocado pelo Claude)
 
 ```
 Crie uma landing page responsiva para uma cafeteria, com seção de menu e contato.

@@ -59,8 +59,9 @@ check(plugin.get("name") in names,
 agent_fm = frontmatter_of(AGENT_SOURCE)
 for field in REQUIRED_AGENT_FIELDS:
     check(field in agent_fm, f"frontmatter do agente sem campo '{field}'")
-check("model: fable" in agent_fm,
-      "model deve ser 'fable' (inteligência fixada no Fable 5)")
+check("model: inherit" in agent_fm,
+      "model deve ser 'inherit' (independência de modelo — sobrevive à "
+      "aposentadoria de qualquer modelo específico)")
 check("Skill" in agent_fm,
       "agente sem a ferramenta Skill (necessária para carregar os módulos)")
 check_synced(AGENT_SOURCE, AGENT_COPY)

@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.2.0 — 2026-07-08
+
+Independência de modelo e modo autônomo — o Hércules sobrevive à
+aposentadoria do Fable 5 (ou de qualquer modelo).
+
+- **`model: fable` → `model: inherit`**: o agente herda o melhor modelo da
+  sessão em vez de ficar preso a um modelo específico. Quando o Fable 5 for
+  descontinuado, o Hércules continua operando sobre o sucessor, sem quebrar
+  e sem perder nada: constituição, regras, módulos e memória vivem nos
+  arquivos do plugin, não no modelo. Fixar num modelo específico continua
+  possível (documentado), com o aviso de que cria dependência da vida útil
+  do modelo.
+- **Modo autônomo documentado e suportado no prompt**: `claude --agent
+  hercules` transforma a sessão principal no próprio Hércules (system
+  prompt, regras e ferramentas dele). O núcleo agora define os dois modos
+  de existência: subagente (padrão; dúvida → bloqueado no handoff) e
+  autônomo (o usuário é o orquestrador; pode perguntar diretamente; o
+  handoff é o relatório de entrega).
+- Nota honesta registrada: um agente é sempre modelo + prompt + ferramentas
+  + memória — não existe agente sem modelo por baixo. A resposta de
+  engenharia à descontinuação de um modelo é a portabilidade da identidade,
+  não um motor próprio.
+- validate.py atualizado: agora exige `model: inherit`.
+
 ## 2.1.0 — 2026-07-07
 
 Fundação de engenharia: constituição, testes do agente e manutenção.
