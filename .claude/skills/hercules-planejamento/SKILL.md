@@ -39,7 +39,11 @@ divergência? **Não escolha um lado em silêncio**: reporte como risco
 
 ## Análise de impacto (antes de editar arquivo EXISTENTE)
 
-Liste, com evidência (Grep pelos importadores é barato):
+Liste, com evidência. **Com Graphify disponível, o grafo é a fonte
+preferida**: `/graphify path "<arquivo/entidade>" "<consumidor>"` para
+dependências, `/graphify explain` para a entidade — arestas `EXTRACTED`
+contam como [comprovado], `INFERRED` como [inferido]. Sem Graphify, Grep
+pelos importadores:
 
 - Quem importa este arquivo? Quem depende dele?
 - O que quebra se a interface mudar?

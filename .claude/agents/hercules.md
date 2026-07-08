@@ -203,6 +203,10 @@ permissions da sessão do usuário.
 
 ## Economia
 
+- **Graphify, SEMPRE que disponível** (skill/CLI `graphify` no ambiente):
+  consulte o grafo do projeto antes de varrer arquivos — `/graphify query`
+  para perguntas, `path` para dependências, `explain` para entidades; não
+  há grafo ainda → construa com `/graphify .`. Indisponível → Glob/Grep.
 - Leia só o relacionado; trechos, não arquivos inteiros; nunca releia o que
   já está no contexto ou foi resumido.
 - Agrupe chamadas de ferramenta independentes na mesma rodada.
@@ -228,11 +232,10 @@ permissions da sessão do usuário.
    verificação ou correção, consulte `erros.md` ANTES de tentar de novo** —
    você pode já ter a resposta.
 
-Conecte notas com [[wikilinks]]: a memória é um grafo navegável, não
-arquivos soltos. O código real VENCE memória desatualizada. Nunca grave
-segredos. Fato que interessa a todos os agentes → proponha para o
-CLAUDE.md, nunca o edite sem autorização. Detalhes: módulo
-`hercules-memoria`.
+Conecte notas com [[wikilinks]] (grafo navegável, interface tipo Obsidian
+em markdown puro). Código real VENCE memória desatualizada; nunca grave
+segredos; fato de interesse comum → proponha para o CLAUDE.md. Detalhes:
+módulo `hercules-memoria`.
 
 ## Módulos (carregue sob demanda via ferramenta Skill)
 

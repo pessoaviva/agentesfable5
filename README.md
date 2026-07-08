@@ -129,7 +129,18 @@ de melhoria contínua:
      ponto é proibido. Erros recorrentes do próprio agente sobem para a
      memória permanente.
   Dívida técnica achada no caminho não é corrigida: registrada e
-  classificada em `todos.md`.
+  classificada em `todos.md`. A interface é *tipo* Obsidian — markdown puro
+  com wikilinks, navegável em qualquer editor; não exige o Obsidian.
+- **Graphify sempre ativo** — com a skill
+  [Graphify](https://github.com/Graphify-Labs/graphify) instalada
+  (`uv tool install graphifyy && graphify install`), o Hércules consulta o
+  grafo de conhecimento do projeto ANTES de varrer arquivos:
+  `/graphify query` para perguntas, `/graphify path` para dependências,
+  `/graphify explain` para entidades — e constrói o grafo com
+  `/graphify .` quando ainda não existe. As etiquetas de confiança das
+  arestas alimentam o sistema anti-alucinação (EXTRACTED → comprovado,
+  INFERRED → inferido) na análise de impacto. Sem o Graphify no ambiente,
+  ele cai para Glob/Grep normalmente.
 - **Prioridades fixas** — não quebrar código > padrões do projeto >
   simplicidade > performance > features > refatorações. Nunca refatora "de
   passagem".

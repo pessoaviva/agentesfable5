@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.4.0 — 2026-07-08
+
+Integração com o Graphify (corrige a interpretação da v2.3.0).
+
+- O "graphfy" pedido era o **Graphify**
+  (github.com/Graphify-Labs/graphify) — skill open-source de grafo de
+  conhecimento para assistentes de código —, não o grafo de memória.
+  Corrigido: o Hércules agora usa o Graphify SEMPRE que a skill/CLI
+  estiver no ambiente — consulta o grafo antes de varrer arquivos
+  (`/graphify query` | `path` | `explain`) e constrói com `/graphify .`
+  quando não existe. Fallback automático para Glob/Grep quando
+  indisponível.
+- Análise de impacto passa a preferir o grafo: `/graphify path` para
+  dependências, com as etiquetas de confiança das arestas mapeadas para o
+  sistema anti-alucinação (EXTRACTED → comprovado, INFERRED → inferido).
+- A memória em grafo com [[wikilinks]] da v2.3.0 permanece — interface
+  "tipo Obsidian" em markdown puro, sem exigir o Obsidian.
+- README documenta a instalação
+  (`uv tool install graphifyy && graphify install`).
+
 ## 2.3.0 — 2026-07-08
 
 Hierarquia de par/comandante, memória em três camadas estilo Obsidian e
